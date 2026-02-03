@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
-import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { inject, Injectable } from '@angular/core';
+import { LoginResponse, OidcSecurityService, UserDataResult } from 'angular-auth-oidc-client';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  constructor(private oidcSecurityService: OidcSecurityService) {}
+  private oidcSecurityService = inject(OidcSecurityService);
 
-  checkAuth(): Observable<any> {
+  checkAuth(): Observable<LoginResponse> {
     return this.oidcSecurityService.checkAuth();
   }
 
@@ -29,19 +29,15 @@ export class AuthService {
     return this.oidcSecurityService.getIdToken();
   }
 
-  getUserData$(): Observable<any> {
+  getUserData$(): Observable<UserDataResult> {
     return this.oidcSecurityService.userData$;
   }
 
   isAuthenticated(): Observable<boolean> {
-    return this.oidcSecurityService.isAuthenticated$.pipe(
-      map(result => result.isAuthenticated)
-    );
+    return this.oidcSecurityService.isAuthenticated$.pipe(map((result) => result.isAuthenticated));
   }
 
   isAuthenticatedValue(): Observable<boolean> {
-    return this.oidcSecurityService.isAuthenticated$.pipe(
-      map(result => result.isAuthenticated)
-    );
+    return this.oidcSecurityService.isAuthenticated$.pipe(map((result) => result.isAuthenticated));
   }
 }

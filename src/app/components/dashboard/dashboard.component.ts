@@ -8,22 +8,24 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './dashboard.component.html',
-  styles: [`
-    @keyframes fade-in {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
+  styles: [
+    `
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
 
-    .animate-fade-in {
-      animation: fade-in 0.6s ease-out;
-    }
-  `]
+      .animate-fade-in {
+        animation: fade-in 0.6s ease-out;
+      }
+    `,
+  ],
 })
 export class DashboardComponent {
   private oidcSecurityService = inject(OidcSecurityService);

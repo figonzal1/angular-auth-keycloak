@@ -7,15 +7,15 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const oidcSecurityService = inject(OidcSecurityService);
 
   return oidcSecurityService.getAccessToken().pipe(
-    switchMap(token => {
+    switchMap((token) => {
       if (token) {
         req = req.clone({
           setHeaders: {
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         });
       }
       return next(req);
-    })
+    }),
   );
 };
