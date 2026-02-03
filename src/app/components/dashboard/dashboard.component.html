@@ -1,34 +1,89 @@
-<div class="min-h-screen bg-gray-100 p-4">
-  <nav class="bg-white shadow-md mb-6">
-    <div class="max-w-4xl mx-auto px-6 py-4 flex justify-between items-center">
-      <h1 class="text-xl font-bold">Dashboard</h1>
+<div class="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900 p-4 md:p-6">
+  <!-- Header/Navbar -->
+  <nav class="bg-gray-800/50 backdrop-blur-xl border border-gray-700/50 rounded-2xl mb-8 shadow-2xl">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-xl font-bold text-white">Dashboard</h1>
+          <p class="text-xs text-gray-400">Panel de Control</p>
+        </div>
+      </div>
       <button
         (click)="logout()"
-        class="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition"
+        class="group relative bg-gradient-to-r from-red-500 to-pink-600 text-white py-2.5 px-6 rounded-xl hover:from-red-600 hover:to-pink-700 transition-all duration-300 shadow-lg hover:shadow-red-500/50 font-medium"
       >
-        Cerrar Sesión
+        <span class="flex items-center space-x-2">
+          <span>Cerrar Sesión</span>
+          <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+        </span>
       </button>
     </div>
   </nav>
 
-  <div class="max-w-4xl mx-auto">
-    <div class="bg-white p-6 rounded-lg shadow-md">
-      <h2 class="text-2xl font-bold mb-4">Datos del Usuario</h2>
+  <div class="max-w-6xl mx-auto">
+    <!-- Loading State -->
+    <div *ngIf="!(userData$ | async)" class="flex flex-col items-center justify-center py-20">
+      <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500 mb-6"></div>
+      <p class="text-gray-400 text-lg">Cargando datos del usuario...</p>
+    </div>
 
-      <div *ngIf="userData$ | async as userData" class="space-y-4">
-        <div>
-          <p class="text-gray-600">Datos Completos:</p>
-          <pre class="text-sm bg-gray-50 p-4 rounded overflow-auto">{{ userData | json }}</pre>
+    <!-- User Data -->
+    <div *ngIf="userData$ | async as userData" class="space-y-6 animate-fade-in">
+      <!-- Welcome Card -->
+      <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 shadow-2xl">
+        <h2 class="text-3xl font-bold text-white mb-2">¡Bienvenido!</h2>
+        <p class="text-blue-100">Acceso autorizado al sistema</p>
+      </div>
+
+      <!-- User Info Card -->
+      <div class="bg-gray-800/50 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-6 shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
+        <div class="flex items-center space-x-3 mb-6">
+          <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <h2 class="text-2xl font-bold text-white">Datos del Usuario</h2>
         </div>
 
-        <div class="mt-6 p-4 bg-gray-100 rounded">
-          <p class="text-gray-600 mb-2">Token de Acceso:</p>
-          <p class="text-xs break-all font-mono">{{ (accessToken$ | async) }}</p>
+        <div class="bg-gray-900/50 rounded-xl p-5 border border-gray-700/30">
+          <p class="text-gray-400 text-sm mb-3 font-medium">Información Completa:</p>
+          <pre class="text-sm text-gray-300 bg-black/30 p-4 rounded-lg overflow-auto border border-gray-700/20 font-mono leading-relaxed">{{ userData | json }}</pre>
         </div>
       </div>
 
-      <div *ngIf="!(userData$ | async)" class="text-center py-8">
-        <p class="text-gray-500">Cargando datos del usuario...</p>
+      <!-- Access Token Card -->
+      <div class="bg-gray-800/50 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-6 shadow-2xl hover:shadow-purple-500/10 transition-all duration-300">
+        <div class="flex items-center space-x-3 mb-6">
+          <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+            </svg>
+          </div>
+          <h2 class="text-2xl font-bold text-white">Token de Acceso</h2>
+        </div>
+
+        <div class="bg-gray-900/50 rounded-xl p-5 border border-gray-700/30">
+          <p class="text-gray-400 text-sm mb-3 font-medium">JWT Token:</p>
+          <div class="bg-black/30 p-4 rounded-lg border border-gray-700/20">
+            <p class="text-xs text-gray-300 break-all font-mono leading-relaxed">{{ (accessToken$ | async) }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Status Badge -->
+      <div class="flex justify-center pt-4">
+        <div class="inline-flex items-center space-x-2 bg-green-500/20 border border-green-500/30 rounded-full px-6 py-3">
+          <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+          <span class="text-green-400 font-medium text-sm">Sesión Activa</span>
+        </div>
       </div>
     </div>
   </div>

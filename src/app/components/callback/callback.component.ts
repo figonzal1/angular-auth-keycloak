@@ -6,7 +6,22 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
   selector: 'app-login-callback',
   standalone: true,
   templateUrl: './callback.component.html',
-  styles: []
+  styles: [`
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-in {
+      animation: fade-in 0.6s ease-out;
+    }
+  `]
 })
 export class CallbackComponent implements OnInit {
   constructor(

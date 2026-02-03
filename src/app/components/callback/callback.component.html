@@ -1,6 +1,66 @@
-<div class="flex items-center justify-center min-h-screen bg-gray-100">
-  <div class="bg-white p-8 rounded-lg shadow-md text-center">
-    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-    <p class="text-gray-600 text-lg">Procesando autenticación...</p>
+<div class="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900 p-4">
+  <!-- Decorative background elements -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute top-20 left-20 w-72 h-72 bg-green-500/10 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-20 right-20 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
+  </div>
+
+  <div class="relative bg-gray-800/50 backdrop-blur-xl border border-gray-700/50 p-12 rounded-3xl shadow-2xl text-center min-w-[400px] max-w-md animate-fade-in">
+    <!-- Animated Icon -->
+    <div class="mb-8">
+      <div class="relative w-24 h-24 mx-auto">
+        <!-- Outer spinning ring -->
+        <div class="absolute inset-0 border-4 border-blue-500/30 rounded-full"></div>
+        <div class="absolute inset-0 border-4 border-t-blue-500 border-r-purple-500 rounded-full animate-spin"></div>
+
+        <!-- Inner icon -->
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg animate-pulse">
+            <svg class="w-9 h-9 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Title and description -->
+    <div class="mb-6">
+      <h2 class="text-2xl font-bold text-white mb-3">Procesando Autenticación</h2>
+      <p class="text-gray-400">Verificando credenciales con Keycloak...</p>
+    </div>
+
+    <!-- Loading dots -->
+    <div class="flex justify-center space-x-2 mb-6">
+      <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
+      <div class="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
+      <div class="w-2 h-2 bg-pink-500 rounded-full animate-bounce" style="animation-delay: 300ms"></div>
+    </div>
+
+    <!-- Progress steps -->
+    <div class="space-y-3 text-left bg-gray-900/30 rounded-xl p-4 border border-gray-700/30">
+      <div class="flex items-center space-x-3">
+        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+        <span class="text-gray-400 text-sm">Validando token de acceso</span>
+      </div>
+      <div class="flex items-center space-x-3">
+        <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse" style="animation-delay: 200ms"></div>
+        <span class="text-gray-400 text-sm">Obteniendo datos del usuario</span>
+      </div>
+      <div class="flex items-center space-x-3">
+        <div class="w-2 h-2 bg-purple-500 rounded-full animate-pulse" style="animation-delay: 400ms"></div>
+        <span class="text-gray-400 text-sm">Configurando sesión</span>
+      </div>
+    </div>
+
+    <!-- Security info -->
+    <div class="mt-8 pt-6 border-t border-gray-700/50">
+      <div class="flex items-center justify-center space-x-2 text-gray-500 text-xs">
+        <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+        <span>Autenticación segura OAuth 2.0</span>
+      </div>
+    </div>
   </div>
 </div>
