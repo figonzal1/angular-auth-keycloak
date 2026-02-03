@@ -1,13 +1,14 @@
 import { OpenIdConfiguration } from 'angular-auth-oidc-client';
+import { environment } from '../../environments/environment';
 
 export function getAuthConfig(): OpenIdConfiguration {
   return {
-    authority: 'http://localhost:8080/realms/YOUR_REALM', // Cambia con tu URL y realm de Keycloak
-    clientId: 'YOUR_CLIENT_ID', // Cambia con tu Client ID
+    authority: environment.keycloak.authority,
+    clientId: environment.keycloak.clientId,
     responseType: 'code',
     scope: 'openid profile email',
-    redirectUrl: window.location.origin + '/callback',
-    postLogoutRedirectUri: window.location.origin,
+    redirectUrl: environment.keycloak.redirectUrl,
+    postLogoutRedirectUri: environment.keycloak.postLogoutRedirectUri,
     autoUserInfo: false,
   };
 }

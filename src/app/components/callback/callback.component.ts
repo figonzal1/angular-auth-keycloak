@@ -5,10 +5,10 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
 @Component({
   selector: 'app-login-callback',
   standalone: true,
-  template: `<p>Procesando autenticación...</p>`,
+  templateUrl: './callback.component.html',
   styles: []
 })
-export class LoginCallbackComponent implements OnInit {
+export class CallbackComponent implements OnInit {
   constructor(
     private oidcSecurityService: OidcSecurityService,
     private router: Router
