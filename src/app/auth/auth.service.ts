@@ -18,7 +18,9 @@ export class AuthService {
   }
 
   logout(): void {
-    this.oidcSecurityService.logoffAndRevokeTokens().subscribe();
+    this.oidcSecurityService
+      .logoffAndRevokeTokens()
+      .subscribe((result) => console.log('Logout complete'));
   }
 
   getAccessToken$(): Observable<string> {
