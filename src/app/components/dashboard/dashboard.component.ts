@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { Router } from '@angular/router';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,15 +28,14 @@ import { Router } from '@angular/router';
   ],
 })
 export class DashboardComponent {
-  private oidcSecurityService = inject(OidcSecurityService);
+  private authService = inject(AuthService);
   private router = inject(Router);
 
-  userData$ = this.oidcSecurityService.userData$;
-  accessToken$ = this.oidcSecurityService.getAccessToken();
+  userData$ = this.authService.getUserData$();
+  accessToken$ = this.authService.getAccessToken$();
 
   logout(): void {
-    this.oidcSecurityService.logoffAndRevokeTokens().subscribe(() => {
-      this.router.navigate(['/login']);
-    });
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }
