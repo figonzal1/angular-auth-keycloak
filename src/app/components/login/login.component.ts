@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -26,13 +26,13 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
   ],
 })
 export class LoginComponent implements OnInit {
-  private oidcSecurityService = inject(OidcSecurityService);
+  private authService = inject(AuthService);
   private router = inject(Router);
   isLoading = false;
 
   ngOnInit(): void {
-    this.oidcSecurityService.isAuthenticated$.subscribe((result) => {
-      if (result.isAuthenticated) {
+    this.authService.isAuthenticated().subscribe((isAuthenticated) => {
+      if (isAuthenticated) {
         this.router.navigate(['/dashboard']);
       }
     });
@@ -40,6 +40,6 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     this.isLoading = true;
-    this.oidcSecurityService.authorize();
+    this.authService.login();
   }
 }
