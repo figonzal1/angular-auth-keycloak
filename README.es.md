@@ -17,6 +17,14 @@ Template de autenticación para aplicaciones Angular usando Keycloak como provee
 - ESLint + Prettier para calidad de código
 - Vitest para testing
 
+## Vista Previa de la Interfaz
+
+### Página de Login
+![Interfaz de Login](./media/login.png)
+
+### Dashboard
+![Interfaz del Dashboard](./media/dashboard.png)
+
 ## Requisitos Previos
 
 - Node.js 18+ y pnpm

@@ -17,6 +17,14 @@ Authentication template for Angular applications using Keycloak as an OIDC (Open
 - ESLint + Prettier for code quality
 - Vitest for testing
 
+## Interface Preview
+
+### Login Page
+![Login Interface](./media/login.png)
+
+### Dashboard
+![Dashboard Interface](./media/dashboard.png)
+
 ## Prerequisites
 
 - Node.js 18+ and pnpm
