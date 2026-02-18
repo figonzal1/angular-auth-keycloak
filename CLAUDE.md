@@ -71,6 +71,16 @@ Keycloak realm is `angular-auth-realm`, client is `angular-client` (public OIDC 
 - PostgreSQL on port `5432`, credentials: `keycloak/keycloak`
 - Required realm config: redirect URIs `http://localhost:4200/*`, web origins `http://localhost:4200`
 
+## Devcontainer
+
+`.devcontainer/` configures a self-contained dev environment with:
+- **mise** (`.mise.toml`) manages Node and pnpm versions — do not install them manually
+- **Docker-in-Docker** via `ghcr.io/devcontainers/features/docker-in-docker:2` (moby:false, compose v2)
+  — chosen over DooD so each developer gets an isolated Docker daemon; Keycloak + Postgres
+  run inside the devcontainer and are cleaned up with it
+- pnpm store persisted in a named volume `pnpm-store` at `/home/vscode/.pnpm-store`
+- Ports forwarded: `4200` (Angular, auto-open) and `8080` (Keycloak, notify)
+
 ## Gotchas
 
 **Auth interceptor applies to all outgoing HTTP requests.** If you add calls to third-party APIs that should not receive the Bearer token, filter by URL inside `src/app/auth/auth.interceptor.ts` before attaching the header.
