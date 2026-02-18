@@ -1,0 +1,50 @@
+{
+  "name": "Angular Auth Keycloak",
+  "runArgs": ["--name", "angular-auth-keycloak-dev"],
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "moby": false,
+      "dockerDashComposeVersion": "v2"
+    }
+  },
+  "shutdownAction": "stopContainer",
+  "remoteUser": "vscode",
+  "mounts": ["source=pnpm-store,target=/home/vscode/.pnpm-store,type=volume"],
+  "postCreateCommand": "bash -lc 'mise install && eval \"$(~/.local/bin/mise activate bash)\" && corepack install && corepack enable pnpm && mkdir -p /home/vscode/.pnpm-store && (sudo chown -R vscode:vscode /home/vscode/.pnpm-store || true) && pnpm config set store-dir /home/vscode/.pnpm-store && pnpm install'",
+  "forwardPorts": [4200, 8080],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "angular.ng-template",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "pflannery.vscode-versionlens"
+      ],
+      "settings": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[html]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        }
+      }
+    }
+  },
+  "portsAttributes": {
+    "4200": {
+      "label": "Angular Dev Server",
+      "onAutoForward": "openBrowser"
+    },
+    "8080": {
+      "label": "Keycloak",
+      "onAutoForward": "notify"
+    }
+  }
+}

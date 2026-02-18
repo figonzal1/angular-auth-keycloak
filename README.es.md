@@ -13,6 +13,7 @@ Template de autenticación para aplicaciones Angular usando Keycloak como provee
 - Logout con revocación de tokens
 - Configuración de entornos (desarrollo, producción)
 - Docker Compose para Keycloak y PostgreSQL
+- **Dev Container** con Docker-in-Docker para setup sin configuración local
 - TailwindCSS para estilos
 - ESLint + Prettier para calidad de código
 - Vitest para testing
@@ -25,13 +26,41 @@ Template de autenticación para aplicaciones Angular usando Keycloak como provee
 ### Dashboard
 ![Interfaz del Dashboard](./media/dashboard.png)
 
-## Requisitos Previos
+## Inicio Rápido con Dev Container
 
-- Node.js 18+ y pnpm
-- Docker y Docker Compose
+La forma más rápida de empezar — sin necesidad de instalar herramientas locales salvo VS Code y Docker.
+
+**Requisitos:** [VS Code](https://code.visualstudio.com/) + [extensión Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) + [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+
+```bash
+git clone <repository-url>
+# Abre la carpeta en VS Code, luego: F1 → "Dev Containers: Reopen in Container"
+```
+
+VS Code construirá el contenedor y automáticamente:
+- Instalará Node.js y pnpm via [mise](https://mise.jdx.dev/) (versiones fijadas en `.mise.toml`)
+- Ejecutará `pnpm install`
+- Configurará las extensiones de Angular Language Service, ESLint, Prettier y Tailwind
+
+Keycloak + PostgreSQL corren **dentro** del contenedor (Docker-in-Docker), completamente aislados por instancia de proyecto:
+
+```bash
+docker compose up -d   # ejecuta esto una vez en la terminal del contenedor
+```
+
+Puertos redirigidos automáticamente: `4200` (Angular → abre el navegador) · `8080` (Keycloak → notificación)
+
+> Luego ve directamente a [Configurar Keycloak](#3-configurar-keycloak).
+
+---
+
+## Instalación Manual
+
+### Requisitos Previos
+
+- Node.js 22+ y pnpm 10+
+- Docker y Docker Compose v2
 - Angular CLI 21+
-
-## Instalación
 
 ### 1. Clonar e instalar dependencias
 
@@ -44,7 +73,7 @@ pnpm install
 ### 2. Levantar Keycloak con Docker
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 Esto iniciará:
@@ -55,7 +84,7 @@ Credenciales de administrador de Keycloak:
 - Usuario: `admin`
 - Contraseña: `admin`
 
-### 3. Configurar Keycloak
+### 3. Configurar Keycloak <a name="3-configurar-keycloak"></a>
 
 #### a) Acceder a la consola de administración
 
@@ -124,10 +153,15 @@ pnpm start
 
 La aplicación estará disponible en `http://localhost:4200`
 
+> **Usuarios de Dev Container:** el servidor de desarrollo no arranca automáticamente — ejecuta `pnpm start` en la terminal de VS Code.
+
 ## Estructura del Proyecto
 
 ```
 angular-auth-keycloack/
+├── .devcontainer/
+│   ├── devcontainer.json              # Config del Dev Container (DinD, puertos, extensiones)
+│   └── Dockerfile                     # Imagen base + herramientas + GitHub CLI + mise
 ├── src/
 │   ├── app/
 │   │   ├── auth/                      # Módulo de autenticación
@@ -150,7 +184,8 @@ angular-auth-keycloack/
 │   ├── main.ts                        # Punto de entrada
 │   └── index.html                     # HTML principal
 ├── keycloak/                          # Capturas de pantalla de configuración
-├── docker-compose.yml                 # Configuración de Docker
+├── .mise.toml                         # Versiones de Node y pnpm (via mise)
+├── docker-compose.yml                 # Keycloak + PostgreSQL
 ├── package.json                       # Dependencias y scripts
 ├── angular.json                       # Configuración de Angular
 ├── tsconfig.json                      # Configuración de TypeScript
@@ -583,7 +618,9 @@ Verificar que:
 - **TailwindCSS 4.1.18**: Framework de estilos
 - **Vitest 4.0.18**: Testing
 - **ESLint + Prettier**: Calidad de código
-- **Docker + Docker Compose**: Containerización
+- **Docker + Docker Compose v2**: Containerización
+- **mise**: Gestión de versiones de Node y pnpm (`.mise.toml`)
+- **Dev Container**: Docker-in-Docker para entornos aislados y reproducibles
 
 ## Siguientes Pasos
 
