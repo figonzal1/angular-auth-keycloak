@@ -5,12 +5,15 @@
     "dockerfile": "Dockerfile",
     "context": ".."
   },
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "moby": false,
+      "dockerDashComposeVersion": "v2"
+    }
+  },
   "shutdownAction": "stopContainer",
   "remoteUser": "vscode",
-  "mounts": [
-    "source=pnpm-store,target=/home/vscode/.pnpm-store,type=volume",
-    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
-  ],
+  "mounts": ["source=pnpm-store,target=/home/vscode/.pnpm-store,type=volume"],
   "postCreateCommand": "bash -lc 'mise install && eval \"$(~/.local/bin/mise activate bash)\" && corepack install && corepack enable pnpm && mkdir -p /home/vscode/.pnpm-store && (sudo chown -R vscode:vscode /home/vscode/.pnpm-store || true) && pnpm config set store-dir /home/vscode/.pnpm-store && pnpm install'",
   "forwardPorts": [4200, 8080],
   "customizations": {
