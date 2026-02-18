@@ -7,9 +7,12 @@
   },
   "shutdownAction": "stopContainer",
   "remoteUser": "vscode",
-  "mounts": ["source=pnpm-store,target=/home/vscode/.pnpm-store,type=volume"],
+  "mounts": [
+    "source=pnpm-store,target=/home/vscode/.pnpm-store,type=volume",
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+  ],
   "postCreateCommand": "bash -lc 'mise install && eval \"$(~/.local/bin/mise activate bash)\" && corepack install && corepack enable pnpm && mkdir -p /home/vscode/.pnpm-store && (sudo chown -R vscode:vscode /home/vscode/.pnpm-store || true) && pnpm config set store-dir /home/vscode/.pnpm-store && pnpm install'",
-  "forwardPorts": [4200],
+  "forwardPorts": [4200, 8080],
   "customizations": {
     "vscode": {
       "extensions": [
@@ -35,6 +38,10 @@
     "4200": {
       "label": "Angular Dev Server",
       "onAutoForward": "openBrowser"
+    },
+    "8080": {
+      "label": "Keycloak",
+      "onAutoForward": "notify"
     }
   }
 }

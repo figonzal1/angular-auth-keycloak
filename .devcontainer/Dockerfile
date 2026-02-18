@@ -17,6 +17,16 @@ RUN mkdir -p -m 755 /etc/apt/keyrings \
   && apt-get install -y gh --no-install-recommends \
   && rm -rf /var/lib/apt/lists/*
 
+# Install Docker CLI (Docker outside of Docker)
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc \
+  && chmod a+r /etc/apt/keyrings/docker.asc \
+  && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" > /etc/apt/sources.list.d/docker.list \
+  && apt-get update \
+  && apt-get install -y docker-ce-cli docker-compose-plugin --no-install-recommends \
+  && rm -rf /var/lib/apt/lists/* \
+  && groupadd -f docker \
+  && usermod -aG docker vscode
+
 # Install mise for the vscode user
 USER vscode
 RUN curl -fsSL https://mise.run | sh \
