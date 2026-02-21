@@ -27,7 +27,7 @@ import { AuthService } from '../../auth/auth.service';
   ],
 })
 export class DashboardComponent {
-  private authService = inject(AuthService);
+  private readonly authService = inject(AuthService);
 
   userData$ = this.authService.getUserData$();
   accessToken$ = this.authService.getAccessToken$();

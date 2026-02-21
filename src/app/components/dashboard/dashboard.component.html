@@ -1,9 +1,10 @@
 <div class="min-h-screen bg-linear-to-br from-gray-900 via-slate-900 to-gray-900 p-4 md:p-6">
+  <div class="max-w-6xl mx-auto">
   <!-- Header/Navbar -->
   <nav
     class="bg-gray-800/50 backdrop-blur-xl border border-gray-700/50 rounded-2xl mb-8 shadow-2xl"
   >
-    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+    <div class="px-6 py-4 flex justify-between items-center">
       <div class="flex items-center space-x-3">
         <div
           class="w-10 h-10 bg-linear-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center"
@@ -46,7 +47,7 @@
     </div>
   </nav>
 
-  <div class="max-w-6xl mx-auto">
+  <div>
     @if (userData$ | async; as userData) {
       <!-- User Data -->
       <div class="space-y-6 animate-fade-in">
@@ -134,5 +135,6 @@
         <p class="text-gray-400 text-lg">Cargando datos del usuario...</p>
       </div>
     }
+  </div>
   </div>
 </div>

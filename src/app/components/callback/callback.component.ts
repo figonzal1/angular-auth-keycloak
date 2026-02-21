@@ -26,8 +26,8 @@ import { AuthService } from '../../auth/auth.service';
   ],
 })
 export class CallbackComponent implements OnInit {
-  private authService = inject(AuthService);
-  private router = inject(Router);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
 
   ngOnInit(): void {
     this.authService.checkAuth().subscribe((result) => {

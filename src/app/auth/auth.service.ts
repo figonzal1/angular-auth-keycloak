@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
-  private oidcSecurityService = inject(OidcSecurityService);
+  private readonly oidcSecurityService = inject(OidcSecurityService);
 
   checkAuth(): Observable<LoginResponse> {
     return this.oidcSecurityService.checkAuth();
