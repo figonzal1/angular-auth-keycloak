@@ -9,6 +9,7 @@ Use `pnpm` as the package manager (not npm or yarn).
 ```bash
 pnpm start      # Dev server at http://localhost:4200
 pnpm build      # Production build
+pnpm watch      # Build in watch mode (development config)
 pnpm test       # Run tests with Vitest
 pnpm lint       # ESLint on *.ts and *.html
 pnpm format     # Prettier formatting
@@ -74,7 +75,8 @@ Keycloak realm is `angular-auth-realm`, client is `angular-client` (public OIDC 
 ## Devcontainer
 
 `.devcontainer/` configures a self-contained dev environment with:
-- **mise** (`.mise.toml`) manages Node and pnpm versions — do not install them manually
+- **mise** (`.mise.toml`) manages Node version — do not install it manually
+- **corepack** (built into Node) manages pnpm — version pinned via `"packageManager"` in `package.json`
 - **Docker-in-Docker** via `ghcr.io/devcontainers/features/docker-in-docker:2` (moby:false, compose v2)
   — chosen over DooD so each developer gets an isolated Docker daemon; Keycloak + Postgres
   run inside the devcontainer and are cleaned up with it
@@ -86,3 +88,7 @@ Keycloak realm is `angular-auth-realm`, client is `angular-client` (public OIDC 
 **Auth interceptor applies to all outgoing HTTP requests.** If you add calls to third-party APIs that should not receive the Bearer token, filter by URL inside `src/app/auth/auth.interceptor.ts` before attaching the header.
 
 **Adding a new protected route:** import `authGuard` in `app.routes.ts` and add `canActivate: [authGuard]` to the route definition.
+
+**Keycloak runs in production mode (`start`, not `start-dev`).** This requires a healthy Postgres connection. The `depends_on` healthcheck handles startup ordering. Do not switch to `start-dev` unless you also remove the `KC_DB_*` env vars — it will fail trying to connect to Postgres with dev defaults.
+
+**SonarQube analysis:** `sonar-project.properties` is configured for `http://localhost:9000`. Run SonarQube locally via Docker to use it; no `pnpm` script exists for it yet.
